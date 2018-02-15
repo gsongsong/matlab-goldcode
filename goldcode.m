@@ -59,7 +59,7 @@ function [p1, p2] = get_poly_order(n)
   end
   % MATLAB and GNU Octave are 1-indexed
   p1 = p1 + 1;
-  p2 = p2 + 1;1
+  p2 = p2 + 1;
 
 end
 
@@ -69,18 +69,18 @@ function P = poly_order_to_binary(p, n)
   for pos = p
     P = bitset(P, pos);
   end
-  P = de2bi(P, n + 1);
+  P = de2bi(P, n + 1); % LSB on the left, MSB on the right
 
 end
 
 function sequence = get_initial_sequence(P, n, N)
 
-  in = zeros(1, n + 1);
+  in = zeros(1, n);
   in(1) = 1;
   sequence = zeros(1, N);
   for jj = 1:N
     sequence(jj) = in(1);
-    msb = mod(sum(in & P), 2);
+    msb = mod(sum(in & P(1:(end - 1))), 2);
     in = [in(2:end) msb];
   end
 
